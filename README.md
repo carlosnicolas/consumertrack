@@ -18,6 +18,7 @@ Follow the next steps to run this app.
 - Run server with the command `php -S localhost:8000 -t public`
 - Access in the browser to the url `localhost:8000`or running the cli command `php public/index.php`
 - The log file is in the `public/log.svg` directory
+- The logger core code is in `app/Http/Controllers/LoggerController.php`
 
 
 ## Additional packages
