@@ -2,6 +2,12 @@
 
 Simple exercise for web development. Making a logger using a file to grab all client's data records.
 
+## Requirements
+* PHP 7.4+
+* NodeJS 14.19.0+
+* Composer 2.3.7+
+
+
 ## Instalation
 Follow the next steps to run this app.
 
