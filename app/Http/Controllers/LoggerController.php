@@ -20,10 +20,18 @@ class LoggerController extends Controller
         $this->geolocation = $this->geolocate();
     }
 
+    /**
+     * Run logger
+     * 
+     * @return void
+     */
     public function index() {
         $this->log("Client access");
     }
 
+    /**
+     * Get the client's IP address parsed from a public service
+     */
     public function getClientIP()
     {
         $m = null;
@@ -37,6 +45,10 @@ class LoggerController extends Controller
         return $m[1] ?? null;
     }
 
+    /**
+     * Get client's browser data from request headers
+     * @return String
+     */
     public function getBrowserData()
     {
         $u_agent = $_SERVER['HTTP_USER_AGENT'] ?? null;
@@ -70,6 +82,10 @@ class LoggerController extends Controller
         return (object) [ "name" => $name, "ub" => $ub ];
     }
 
+    /**
+     * Detect device type using vendor library
+     * @return String
+     */
     public function getDeviceType()
     {
         $detect = new MobileDetect;
@@ -80,6 +96,10 @@ class LoggerController extends Controller
         return "Desktop";
     }
 
+    /**
+     * Load all client data
+     * @return Object
+     */
     public function getClient() {
         return (object) [
             "ip" => $this->getClientIP(),
@@ -88,6 +108,10 @@ class LoggerController extends Controller
         ];
     }
 
+    /**
+     * Get geolocalization data using GeoIP2 service
+     * @return Object
+     */
     public function geolocate() {
         $data = (object) [
             "country" => "Unknown",
@@ -105,6 +129,10 @@ class LoggerController extends Controller
         return $data;
     }
 
+    /**
+     * Store the new record in the log file
+     * @return void
+     */
     public function store($action = "") {
         try {
             $handle = fopen(public_path("log.csv"), "a");
@@ -117,6 +145,10 @@ class LoggerController extends Controller
         }
     }
 
+    /**
+     * Prepare, display and store the new log record.
+     * @return void
+     */
     public function log($action) {
         $dateTime = date('m/d/Y H:i:s', time());
         $log = "{$dateTime} - {$this->client->ip} - {$action} [{$this->geolocation->country} {$this->geolocation->state} - {$this->client->device} / {$this->client->browser->ub} / {$this->client->browser->name}]";
